@@ -8,7 +8,18 @@ import { getVisibleEvents } from '../utils/eventFilters'
 import { useState } from 'react'
 
 const Home = () => {
-  const { searchQuery, selectedCategory, selectedCity, sortBy, setSortBy, setSelectedCity, setSelectedCategory } = useFilters()
+  const { 
+    searchQuery, 
+    selectedCategory, 
+    selectedCity, 
+    sortBy, 
+    setSortBy, 
+    setSelectedCity, 
+    setSelectedCategory,
+    priceRange,
+    selectedVenues,
+    selectedDate
+  } = useFilters()
   const [activeTab, setActiveTab] = useState('tumu')
   
   const visibleEvents = getVisibleEvents({
@@ -17,6 +28,9 @@ const Home = () => {
     selectedCategory,
     selectedCity,
     sortBy,
+    priceRange,
+    selectedVenues,
+    selectedDate,
   })
 
   // Get featured events (first 6 events)

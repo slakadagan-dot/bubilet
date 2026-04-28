@@ -1,13 +1,20 @@
 import { useState } from 'react'
 import { Calendar, MapPin, DollarSign, ChevronDown, ChevronUp } from 'lucide-react'
+import { useFilters } from '../context/useFilters'
 
 const Sidebar = () => {
   const [dateExpanded, setDateExpanded] = useState(true)
   const [priceExpanded, setPriceExpanded] = useState(true)
   const [venueExpanded, setVenueExpanded] = useState(true)
-  const [selectedDate, setSelectedDate] = useState('')
-  const [priceRange, setPriceRange] = useState({ min: 0, max: 5000 })
-  const [selectedVenues, setSelectedVenues] = useState([])
+  
+  const {
+    selectedDate,
+    setSelectedDate,
+    priceRange,
+    setPriceRange,
+    selectedVenues,
+    setSelectedVenues
+  } = useFilters()
 
   const dateOptions = [
     { value: 'today', label: 'Bugün' },
@@ -105,8 +112,8 @@ const Sidebar = () => {
         {priceExpanded && (
           <div className="mt-4 space-y-4">
             <div className="flex items-center justify-between text-sm text-slate-600">
-              <span>{priceRange.min.toLocaleString('tr-TR')} ₺</span>
-              <span>{priceRange.max.toLocaleString('tr-TR')} ₺</span>
+              <span>{priceRange[0].toLocaleString('tr-TR')} ₺</span>
+              <span>{priceRange[1].toLocaleString('tr-TR')} ₺</span>
             </div>
             
             <div className="space-y-3">
@@ -115,11 +122,11 @@ const Sidebar = () => {
                   type="range"
                   min="0"
                   max="5000"
-                  value={priceRange.min}
-                  onChange={(e) => setPriceRange(prev => ({ ...prev, min: parseInt(e.target.value) }))}
+                  value={priceRange[0]}
+                  onChange={(e) => setPriceRange([parseInt(e.target.value), priceRange[1]])}
                   className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer slider-thumb-green"
                   style={{
-                    background: `linear-gradient(to right, #00b14f 0%, #00b14f ${(priceRange.min / 5000) * 100}%, #e2e8f0 ${(priceRange.min / 5000) * 100}%, #e2e8f0 100%)`
+                    background: `linear-gradient(to right, #00b14f 0%, #00b14f ${(priceRange[0] / 5000) * 100}%, #e2e8f0 ${(priceRange[0] / 5000) * 100}%, #e2e8f0 100%)`
                   }}
                 />
               </div>
@@ -128,11 +135,11 @@ const Sidebar = () => {
                   type="range"
                   min="0"
                   max="5000"
-                  value={priceRange.max}
-                  onChange={(e) => setPriceRange(prev => ({ ...prev, max: parseInt(e.target.value) }))}
+                  value={priceRange[1]}
+                  onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
                   className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer slider-thumb-green"
                   style={{
-                    background: `linear-gradient(to right, #e2e8f0 0%, #e2e8f0 ${(priceRange.min / 5000) * 100}%, #00b14f ${(priceRange.min / 5000) * 100}%, #00b14f ${(priceRange.max / 5000) * 100}%, #e2e8f0 ${(priceRange.max / 5000) * 100}%, #e2e8f0 100%)`
+                    background: `linear-gradient(to right, #e2e8f0 0%, #e2e8f0 ${(priceRange[0] / 5000) * 100}%, #00b14f ${(priceRange[0] / 5000) * 100}%, #00b14f ${(priceRange[1] / 5000) * 100}%, #e2e8f0 ${(priceRange[1] / 5000) * 100}%, #e2e8f0 100%)`
                   }}
                 />
               </div>
@@ -142,15 +149,15 @@ const Sidebar = () => {
               <input
                 type="number"
                 placeholder="Min"
-                value={priceRange.min}
-                onChange={(e) => setPriceRange(prev => ({ ...prev, min: parseInt(e.target.value) || 0 }))}
+                value={priceRange[0]}
+                onChange={(e) => setPriceRange([parseInt(e.target.value) || 0, priceRange[1]])}
                 className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-[#00b14f] focus:outline-none focus:ring-1 focus:ring-[#00b14f]/20"
               />
               <input
                 type="number"
                 placeholder="Max"
-                value={priceRange.max}
-                onChange={(e) => setPriceRange(prev => ({ ...prev, max: parseInt(e.target.value) || 5000 }))}
+                value={priceRange[1]}
+                onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value) || 5000])}
                 className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-[#00b14f] focus:outline-none focus:ring-1 focus:ring-[#00b14f]/20"
               />
             </div>

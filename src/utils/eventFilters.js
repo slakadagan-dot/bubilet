@@ -79,6 +79,9 @@ export const getVisibleEvents = ({
   selectedCategory,
   selectedCity,
   sortBy,
+  priceRange = [0, 5000],
+  selectedVenues = [],
+  selectedDate = '',
 }) => {
   const normalizedQuery = normalizeText(searchQuery).trim()
   const normalizedCategory = normalizeText(selectedCategory)
@@ -102,7 +105,21 @@ export const getVisibleEvents = ({
         field.toLowerCase().includes(searchQuery.toLowerCase())
       )
 
-    return matchesCategory && matchesCity && matchesSearch
+    // Price range matching - STRICT: use array format [min, max]
+    const price = Number(event.price) || 0
+    const matchesPrice = price >= priceRange[0] && price <= priceRange[1]
+
+    // Venue matching - check if specific venues are selected or if none selected
+    const venueMatch = selectedVenues.length === 0 || selectedVenues.includes(event.venue)
+
+    // Date matching - check if specific date options are selected
+    const dateMatch = !selectedDate || selectedDate === 'all' || 
+      (selectedDate === 'today' && event.date.toLowerCase().includes('bugün')) ||
+      (selectedDate === 'tomorrow' && event.date.toLowerCase().includes('yarın')) ||
+      (selectedDate === 'thisWeek' && event.date.toLowerCase().includes('hafta'))
+
+    // STRICT AND LOGIC: All conditions must be true
+    return matchesCategory && matchesCity && matchesSearch && matchesPrice && venueMatch && dateMatch
   })
 
   return sortEvents(filtered, sortBy)

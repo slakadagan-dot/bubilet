@@ -1,4 +1,4 @@
-import { MessageSquareText, Settings, Star, Ticket, User, UserRoundPen, Calendar, MapPin, ChevronRight, Activity, Heart, Phone, Mail, Lock, Bell, Shield, Globe, CreditCard, LogOut, Edit, Plus, Search, AlertCircle, X } from 'lucide-react'
+import { MessageSquareText, Settings, Star, Ticket, User, UserRoundPen, Calendar, MapPin, ChevronRight, Activity, Heart, Phone, Mail, Lock, Bell, Shield, Globe, CreditCard, LogOut, Edit, Plus, Search, AlertCircle, X, Check } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
 import { useCart } from '../context/useCart'
@@ -241,66 +241,66 @@ const Profile = () => {
                         <h3 className="text-lg font-extrabold text-slate-900 line-clamp-1">{order.event.title}</h3>
                       </div>
                     
-                    <div className="space-y-2 mt-3">
-                      <div className="flex items-center gap-2 text-sm text-slate-600 font-medium">
-                        <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-[#00b14f]"><Calendar size={12}/></div>
-                        {order.event.date}
+                      <div className="space-y-2 mt-3">
+                        <div className="flex items-center gap-2 text-sm text-slate-600 font-medium">
+                          <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-[#00b14f]"><Calendar size={12}/></div>
+                          {order.event.date}
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-slate-600 font-medium">
+                          <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-[#00b14f]"><MapPin size={12}/></div>
+                          <span className="line-clamp-1">{order.event.venue}</span>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-slate-600 font-medium">
-                        <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-[#00b14f]"><MapPin size={12}/></div>
-                        <span className="line-clamp-1">{order.event.venue}</span>
-                      </div>
-                    </div>
                     
-                    <div className="mt-4 p-3 bg-slate-50 rounded-xl border border-slate-100">
-                      <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Seçilen Biletler</p>
-                      <p className="text-sm font-bold text-slate-800">
-                        {order.selectedTickets?.map(t => `${t.quantity}x ${t.name}`).join(', ') || order.selectedSeats?.join(', ')}
-                      </p>
+                      <div className="mt-4 p-3 bg-slate-50 rounded-xl border border-slate-100">
+                        <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Seçilen Biletler</p>
+                        <p className="text-sm font-bold text-slate-800">
+                          {order.selectedTickets?.map(t => `${t.quantity}x ${t.name}`).join(', ') || order.selectedSeats?.join(', ')}
+                        </p>
+                      </div>
                     </div>
-                  </div>
                   
-                  <div className="mt-5 pt-4 border-t border-slate-100 flex justify-between items-center">
-                    <span className="text-xs font-bold bg-emerald-50 text-[#00b14f] border border-emerald-100 px-2 py-1 rounded-md">PNR: {order.id.toUpperCase()}</span>
-                    <Link to={`/event/${order.event.id}`} className="inline-flex items-center gap-1 text-sm font-bold text-[#00b14f] hover:text-[#009946]">
-                      Detaylar <ChevronRight size={16} />
-                    </Link>
-                    <button
-                      onClick={() => {
-                        if (window.confirm('Bu bileti iptal etmek istediğinize emin misiniz?')) {
-                          cancelTicket(order.id)
-                        }
-                      }}
-                      className="ml-4 inline-flex items-center gap-2 rounded-lg border border-red-200 text-red-600 px-4 py-2 text-sm font-semibold hover:bg-red-50 transition-colors"
-                    >
-                      <AlertCircle size={16} />
-                      İade Talebi Oluştur
-                    </button>
+                    <div className="mt-5 pt-4 border-t border-slate-100 flex justify-between items-center">
+                      <span className="text-xs font-bold bg-emerald-50 text-[#00b14f] border border-emerald-100 px-2 py-1 rounded-md">PNR: {order.id.toUpperCase()}</span>
+                      <Link to={`/event/${order.event.id}`} className="inline-flex items-center gap-1 text-sm font-bold text-[#00b14f] hover:text-[#009946]">
+                        Detaylar <ChevronRight size={16} />
+                      </Link>
+                      <button
+                        onClick={() => {
+                          if (window.confirm('Bu bileti iptal etmek istediğinize emin misiniz?')) {
+                            cancelTicket(order.id)
+                          }
+                        }}
+                        className="ml-4 inline-flex items-center gap-2 rounded-lg border border-red-200 text-red-600 px-4 py-2 text-sm font-semibold hover:bg-red-50 transition-colors"
+                      >
+                        <AlertCircle size={16} />
+                        İade Talebi Oluştur
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      ) : (
-        <div className="flex min-h-[400px] flex-col items-center justify-center rounded-3xl border-2 border-dashed border-slate-200 bg-slate-50 text-center p-6">
-          <div className="w-20 h-20 bg-white rounded-full shadow-sm flex items-center justify-center mb-4">
-            <Ticket size={32} className="text-slate-300" />
+        ) : (
+          <div className="flex min-h-[400px] flex-col items-center justify-center rounded-3xl border-2 border-dashed border-slate-200 bg-slate-50 text-center p-6">
+            <div className="w-20 h-20 bg-white rounded-full shadow-sm flex items-center justify-center mb-4">
+              <Ticket size={32} className="text-slate-300" />
+            </div>
+            <h2 className="text-xl font-bold text-slate-800">Henüz Biletiniz Bulunmuyor</h2>
+            <p className="mt-2 text-sm text-slate-500 max-w-sm">Satın aldığınız biletler burada görünecektir. Etkinlikleri keşfederek bilet satın alabilirsiniz.</p>
+            <Link
+              to="/events"
+              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-[#00b14f] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#009946] shadow-md shadow-emerald-500/20"
+            >
+              <Search size={18} />
+              Etkinlikleri Keşfet
+            </Link>
           </div>
-          <h2 className="text-xl font-bold text-slate-800">Henüz Biletiniz Bulunmuyor</h2>
-          <p className="mt-2 text-sm text-slate-500 max-w-sm">Satın aldığınız biletler burada görünecektir. Etkinlikleri keşfederek bilet satın alabilirsiniz.</p>
-          <Link
-            to="/events"
-            className="mt-6 inline-flex items-center gap-2 rounded-xl bg-[#00b14f] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#009946] shadow-md shadow-emerald-500/20"
-          >
-            <Search size={18} />
-            Etkinlikleri Keşfet
-          </Link>
-        </div>
-      )}
-    </div>
-  )
-}
+        )}
+      </div>
+    )
+  }
 
   const renderFavorilerimTab = () => {
     const favoriteEvents = mockEvents.filter(event => favoriteIds.includes(event.id))
@@ -338,6 +338,87 @@ const Profile = () => {
     )
   }
 
+  const renderAdeTaleplerimTab = () => {
+    const refundedTickets = purchasedTickets.filter(ticket => ticket.status === 'refunded')
+    
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-slate-900">İade Taleplerim</h2>
+          <span className="text-sm text-slate-500">{refundedTickets.length} iade talebi</span>
+        </div>
+        
+        {refundedTickets.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+            {refundedTickets.map(order => (
+              <div key={order.id} className="group flex flex-col sm:flex-row border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-slate-300/50 transition-all bg-white">
+                <div className="relative w-full sm:w-40 h-48 sm:h-auto flex-shrink-0">
+                  <img src={order.event.imageUrl} alt={order.event.title} className="w-full h-full object-cover" />
+                  <div className="absolute top-2 left-2 bg-white/90 backdrop-blur px-2 py-1 rounded text-[10px] font-black tracking-wider text-slate-900">
+                    {order.event.category.toUpperCase()}
+                  </div>
+                </div>
+                <div className="p-5 flex-grow flex flex-col justify-between">
+                  <div>
+                    <div className="flex justify-between items-start mb-2">
+                      <h3 className="text-lg font-extrabold text-slate-900 line-clamp-1">{order.event.title}</h3>
+                    </div>
+                    
+                    <div className="space-y-2 mt-3">
+                      <div className="flex items-center gap-2 text-sm text-slate-600 font-medium">
+                        <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-[#00b14f]"><Calendar size={12}/></div>
+                        {order.event.date}
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-slate-600 font-medium">
+                        <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-[#00b14f]"><MapPin size={12}/></div>
+                        <span className="line-clamp-1">{order.event.venue}</span>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-4 p-3 bg-slate-50 rounded-xl border border-slate-100">
+                      <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Seçilen Biletler</p>
+                      <p className="text-sm font-bold text-slate-800">
+                        {order.selectedTickets?.map(t => `${t.quantity}x ${t.name}`).join(', ') || order.selectedSeats?.join(', ')}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-5 pt-4 border-t border-slate-100 flex justify-between items-center">
+                    <span className="text-xs font-bold bg-emerald-50 text-[#00b14f] border border-emerald-100 px-2 py-1 rounded-md">PNR: {order.id.toUpperCase()}</span>
+                    <Link to={`/event/${order.event.id}`} className="inline-flex items-center gap-1 text-sm font-bold text-[#00b14f] hover:text-[#009946]">
+                      Detaylar <ChevronRight size={16} />
+                    </Link>
+                    <div className="inline-flex items-center gap-2 px-3 py-1">
+                      <span className="text-xs font-bold bg-gray-100 text-gray-700 px-2 py-1 rounded-full">
+                        <Check size={12} className="text-green-600" />
+                      </span>
+                      <span className="text-xs text-gray-600">İade Edildi</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex min-h-[400px] flex-col items-center justify-center rounded-3xl border-2 border-dashed border-slate-200 bg-slate-50 text-center p-6">
+            <div className="w-20 h-20 bg-white rounded-full shadow-sm flex items-center justify-center mb-4">
+              <AlertCircle size={32} className="text-slate-300" />
+            </div>
+            <h2 className="text-xl font-bold text-slate-800">Henüz İade Talebiniz Bulunmuyor</h2>
+            <p className="mt-2 text-sm text-slate-500 max-w-sm">İade talebiniz bulunmamaktadır. Aktif biletleriniz için 'Biletlerim' sekmesini kontrol edin.</p>
+            <Link
+              to="/"
+              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-[#00b14f] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#009946] shadow-md shadow-emerald-500/20"
+            >
+              <Search size={18} />
+              Etkinliklere Göz At
+            </Link>
+          </div>
+        )}
+      </div>
+    )
+  }
+
   const renderDegerlendirmelerimTab = () => (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold text-slate-900">Değerlendirmelerim</h2>
@@ -364,27 +445,19 @@ const Profile = () => {
         <h3 className="text-lg font-semibold text-slate-900 mb-6">Bildirim Ayarları</h3>
         
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Mail size={20} className="text-slate-600" />
-              <div>
-                <p className="font-medium text-slate-900">E-posta Bildirimleri</p>
-                <p className="text-sm text-slate-600">Etkinlikler ve kampanyalar hakkında e-posta alın</p>
-              </div>
-            </div>
+          <label className="flex items-center justify-between">
+            <span className="text-sm font-medium text-slate-700">E-posta Bildirimler</span>
             <button
-              onClick={() => handleSettingToggle('emailNotifications')}
-              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                settings.emailNotifications ? 'bg-[#00b14f]' : 'bg-slate-200'
-              }`}
+              type="button"
+              className="relative inline-flex h-6 w-11 items-center justify-center rounded-full bg-slate-200 transition-colors hover:bg-slate-300"
             >
-              <span
-                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                  settings.emailNotifications ? 'translate-x-6' : 'translate-x-1'
-                }`}
-              />
+              <div className={`absolute inset-0 h-6 w-11 rounded-full transition-colors ${
+                settings.emailNotifications ? 'bg-[#00b14f]' : 'bg-slate-300'
+              }`}>
+                <div className="h-2 w-2 bg-white rounded-full shadow-sm"></div>
+              </div>
             </button>
-          </div>
+          </label>
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -529,6 +602,8 @@ const Profile = () => {
         return renderFavorilerimTab()
       case 'degerlendirmelerim':
         return renderDegerlendirmelerimTab()
+      case 'ade_taleplerim':
+        return renderAdeTaleplerimTab()
       case 'ayarlar':
         return renderAyarlarTab()
       default:
